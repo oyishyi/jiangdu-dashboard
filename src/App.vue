@@ -247,10 +247,15 @@
                   <div class="rightBottomLine2"></div>
 
                   <div class="boxVideo">
-                    <el-table ref="table" :data="messageData" style="width: 100% ;height:100%" :show-header="false">
-                      <el-table-column prop="des" align="left" label="发布消息">
+                    <div class="scroll-content">
+                      <p v-for="(item, index) in messageData" :key="index">
+                        {{item.des}}
+                      </p>
+                    </div>
+                    <!-- <el-table ref="table" :data="messageData" style="width: 100% ;height:100%" :show-header="false">
+                      <el-table-column prop="des" align="left" label="发布消息" class-name="scroll-content">
                       </el-table-column>
-                    </el-table>
+                    </el-table> -->
                   </div>
                 </li>
                 <li class="contList">
@@ -341,6 +346,12 @@
     data() {
       return {
         messageData: [{
+          des: "发布消息XXX"
+        },
+        {
+          des: "发布消息XXX"
+        },
+        {
           des: "发布消息XXX"
         },
         {
@@ -1794,37 +1805,28 @@
       },
       drawBar() {
         var data = [{
-          "name": "一月",
-          "value": 80
-        }, {
-          "name": "二月",
-          "value": 87.8
-        }, {
-          "name": "三月",
-          "value": 71
-        }, {
-          "name": "四月",
-          "value": 80
-        }, {
-          "name": "五月",
-          "value": 66
-        }, {
-          "name": "六月",
-          "value": 80
-        }, {
-          "name": "七月",
-          "value": 80
-        }];
+        "name": "制造业",
+        "value": 282.76
+       }, {
+        "name": "建筑业",
+        "value": 1051.1
+       }, {
+        "name": "采矿业",
+        "value": 50
+       },{
+        "name": "金融业",
+        "value": 158.07
+    }];
         var xData = [],
           yData = [];
         var min = 50;
         data.map(function (a, b) {
           xData.push(a.name);
-          if (a.value === 0) {
-            yData.push(a.value + min);
-          } else {
-            yData.push(a.value);
-          }
+          yData.push(a.value);
+          // if (a.value === 0) {
+          //   yData.push(a.value + min);
+          // } else {
+          // }
         });
         var option = {
 
@@ -1866,8 +1868,8 @@
             axisTick: {
               show: false
             },
-            min: min,
-            max: 100,
+            min: 0,
+            max: 1200,
             axisLine: {
               lineStyle: {
                 color: '#0c3b71'
@@ -1875,7 +1877,7 @@
             },
             axisLabel: {
               color: 'rgb(170,170,170)',
-              formatter: '{value} %'
+              formatter: '{value} (亿元)'
             }
           },
           {
@@ -1991,11 +1993,46 @@
                 show: false
               },
               data: [
-                { value: 1048, name: 'Search Engine' },
-                { value: 735, name: 'Direct' },
-                { value: 580, name: 'Email' },
-                { value: 484, name: 'Union Ads' },
-                { value: 300, name: 'Video Ads' }
+                {
+                "name": "住宿和餐饮业",
+                "value": 1
+              },
+              {
+                "name": "信息传输、软件和信息技术服务业",
+                "value": 1
+              },
+              {
+                "name": "制造业",
+                "value": 96
+              },
+              {
+                "name": "建筑业",
+                "value": 17
+              },
+              {
+                "name": "批发和零售业",
+                "value": 3
+              },
+              {
+                "name": "电力、热力、燃气及水生产和供应业",
+                "value": 1
+              },
+              {
+                "name": "科学研究和技术服务业",
+                "value": 8
+              },
+              {
+                "name": "租赁和商务服务业",
+                "value": 2
+              },
+              {
+                "name": "采矿业",
+                "value": 1
+              },
+              {
+                "name": "金融业",
+                "value": 9
+              }
               ]
             }
           ]
@@ -2168,7 +2205,14 @@
 <style>
   @import "./css/reset.css";
   @import "./css/video-js.css";
-
+  @keyframes marqueeTop {
+      from {
+          transform: translate(0, 0);
+      }
+      to {
+          transform: translate(0, -50%);
+      }
+  }
   .boxRader {
     position: relative;
     width: 100%;
@@ -2427,8 +2471,21 @@
   .boxVideo {
     width: 100%;
     height: 100%;
+    position: relative;
+    overflow: hidden;
   }
-
+  .boxVideo .scroll-content {
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: marqueeTop 20s infinite linear;
+  }
+  .scroll-content p {
+    line-height: 50px;
+    font-size: 22px;
+    margin-left: 10px;
+  }
   .boxVideo video {
     width: 100%;
     height: 100%;
