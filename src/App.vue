@@ -145,8 +145,8 @@
         <div class="baseBox centerMainBox2" style="height: 30%">
           <img src="./img/down.png" alt="" />
           <div class="boxTitle2" style="width: 26%">统计数据</div>
-          <div class="csbaseBox1">
-            <ul class="baseDatas">
+          <div class="csbaseBox1 bottom">
+            <!-- <ul class="baseDatas">
               <li class="left">
                 <a href="">
                   <div class="borderRight"></div>
@@ -165,9 +165,9 @@
                   <span>茶农统计</span>
                 </a>
               </li>
-            </ul>
+            </ul> -->
 
-            <table class="tableDetalis">
+            <!-- <table class="tableDetalis">
               <tr>
                 <td>名称</td>
                 <td>类型</td>
@@ -223,7 +223,13 @@
                 <td>黄金茶</td>
                 <td>11亩</td>
               </tr>
-            </table>
+            </table> -->
+            <p>{{echartsData.COMPANY_ADDRESS}}</p>
+            <p>{{echartsData.belongOrg}}</p>
+            <p>{{echartsData.econKind}}</p>
+            <p>{{echartsData.INDUSTRY}}</p>
+            <p>{{echartsData.historyNames}}</p>
+            <p>{{echartsData.policy}}</p>
           </div>
         </div>
       </div>
@@ -317,10 +323,11 @@
     mounted() {
       this.drawMap();
       this.drawGraph();
-      this.drawRadar();
       this.drawPie();
       this.drawBar();
+      this.drawRadar();
       const table = this.$refs.table;
+;
       // 拿到表格中承载数据的div元素
       //let scrollHeight = this.$refs.table.bodyWrapper.scrollHeight;
 
@@ -345,6 +352,12 @@
     },
     data() {
       return {
+        list1: {},
+        list2: {},
+        list3: {},
+        list4: {},
+        list5: {},
+        echartsData: {},
         messageData: [{
           des: "发布消息XXX"
         },
@@ -1593,15 +1606,42 @@
         "policy": "关于印发《仪征市金融支持高层次人才创业创新政策支持意见》的通知;印发关于进一步加大金融支持实体经济发展的实施意见的通知;关于印发《仪征市小微企业“政银企合作”业务管理办法》的通知",
         "locations": "565;1040;567"
     }
-    ]
+    ],
+     Index: '0',
+     nun: '',
       };
+    },
+    created() {
+      this.echartsData = this.listData[0]
+            console.log( this.echartsData)
+    },
+    watch: {
+      // this.index
+      echartsData: {
+        handler(val,oldval) {
+          console.log(val);
+          this.drawRadar(val)
+          this.drawGraph()
+        }
+      },
     },
     methods: {
       drawMap() {
         var chartDom = document.getElementById('map');
         var myChart = this.$echarts.init(chartDom);
         var option;
+        var that = this
+        var list = []
+        this.listData.forEach((item, index) =>{
+          var obj = {
+            name: item.COMPANY_NAME,
+            value: item.location
+          }
+          list.push(obj)
+          // this.list1.push(item)
 
+        })
+        console.log(list);
         var busLines = [{
           "coords": [[
             119.461982,
@@ -2973,7 +3013,7 @@
                   // color: '#c23531',
                   // color: 'rgb(200, 35, 45)',
                   opacity: 0.3,
-                  width: 3
+                  width: 4
                 }
               },
               progressiveThreshold: 500,
@@ -2997,14 +3037,17 @@
               zlevel: 1
             },
             {
-              name: 'Top 5',
+              name: '扬州市',
               type: 'effectScatter',
               coordinateSystem: 'bmap',
-              data: [[119.785996, 32.666091]],
+              data: list,
               symbolSize: 7,
               encode: {
                 value: 2
               },
+              // symbolSize: function (val) {
+              //     return val[2] / 10;
+              //   },
               showEffectOn: 'render',
               rippleEffect: {
                 brushType: 'stroke'
@@ -3028,6 +3071,26 @@
         };
 
         option && myChart.setOption(option);
+        myChart.on('click', function(params) {
+          if(params.data.name === "江苏峰业科技环保集团股份有限公司") {
+            // console.log(that.listData);
+            that.echartsData = that.listData[1]
+            // console.log(that.list1);
+            this.index = '1'
+          } else if (params.data.name === "扬州宁达贵金属有限公司") {
+            that.echartsData = that.listData[0]
+            this.index = '0'
+          } else if (params.data.name === "江苏天雨环保集团有限公司") {
+            that.echartsData = that.listData[2]
+            this.index = '2'
+          } else if(params.data.name === "江苏捷凯电力器材有限公司") {
+            that.echartsData = that.listData[3]
+            this.index = '3'
+          } else if(params.data.name = "江苏江都农村商业银行股份有限公司") {
+            that.echartsData = that.listData[4]
+          }
+          // console.log(that.echartsData);
+        })
 
       },
       drawBar() {
@@ -3297,15 +3360,67 @@
         var chartDom = document.getElementById("graph");
         var myChart = this.$echarts.init(chartDom);
         var option;
+        var categories = [];
+        var that = this
+        var links = []
+        var list = []
+        var listSmall = []
+        let num = Math.random()*1000
+        // console.log(this.num);
+        this.echartsData.network.forEach((item,index) =>{
+          let num = Math.random()*1000
+          console.log(num);
+           listSmall.push(item.shareholder)
+          let obj = {
+            'category': 0,
+            'id': index+1,
+            'label': {show: false},
+            'name': item.shareholder,
+            'symbolSize': 12.8888,
+            'value': 4,
+            'x': -num*(index+11.133),
+            'y': num*(index+33.33),
+          }
+          list.push(obj)
+          // list.push(objct)
+        })
+        // console.log(this.echartsData.network[0].company);/
+          let objct = {
+          "id": "0",
+          "name": this.echartsData.network[0].company,
+          "symbolSize": 19.12381,
+          "x": -638.922,
+          "y": 123.83,
+          "value": 28.685715,
+          "category": 1
+          }
+          list.push(objct)
+        // console.log(list);
         $.getJSON(ROOT_PATH + "/data/asset/data/les-miserables.json", function (
           graph
         ) {
           myChart.hideLoading();
+          // let node = graph.nodes.splice(0,10)
+          // node.forEach((item) => {
+          //   delete item.x
+          //   delete item.y
+          // })
+          // console.log(node);
+          // this.echartsData.network.forEach((item,index) =>{
+          // let obj = {
+          //   symbolSize: item.company,
+          //   value: item.shareholder
+          //  }
+          //  node.push
+          // })
           graph.nodes.forEach(function (node) {
             node.label = {
               show: node.symbolSize > 30
             };
           });
+          console.log(links);
+          console.log(categories);
+          console.log(graph);
           option = {
             title: {
               text: "企业关系图",
@@ -3324,10 +3439,10 @@
             animationDuration: 1500,
             animationEasingUpdate: "quinticInOut",
             series: [{
-              name: "Les Miserables",
+              name: "扬州市",
               type: "graph",
-              layout: "none",
-              data: graph.nodes,
+              // layout: "none",
+              nodes:list,
               links: graph.links,
               categories: graph.categories,
               roam: true,
@@ -3350,11 +3465,20 @@
           myChart.setOption(option);
         });
       },
-      drawRadar() {
+      drawRadar(val) {
         const barChart = this.$echarts.init(
           document.getElementById("radar"),
           "shine"
         );
+        
+        var list = {};
+        var list1 = {}
+        var series = []
+        list1 = this.echartsData.radar
+        series = list1.series[0].data
+        // console.log(series[0]);
+        list = val.radar;
+        series = list.series[0].data
         var option = {
           color: ["#4992ff", "#7cffb2"],
           textStyle: {
@@ -3365,31 +3489,30 @@
           darkMode: true,
           radar: {
             // shape: 'circle',
-            indicator: [{
-              name: "Sales",
-              max: 6500
-            },
-            {
-              name: "Administration",
-              max: 16000
-            },
-            {
-              name: "Information Technology",
-              max: 30000
-            },
-            {
-              name: "Customer Support",
-              max: 38000
-            },
-            {
-              name: "Development",
-              max: 52000
-            },
-            {
-              name: "Marketing",
-              max: 25000
-            }
-            ],
+            indicator: [ {
+                    "name": "基础能力",
+                    "max": 6500
+                },
+                {
+                    "name": "经营管理",
+                    "max": 16000
+                },
+                {
+                    "name": "科技创新",
+                    "max": 30000
+                },
+                {
+                    "name": "只能创造",
+                    "max": 38000
+                },
+                {
+                    "name": "可持续发展",
+                    "max": 52000
+                },
+                {
+                    "name": "信用风险",
+                    "max": 25000
+                }],
             axisName: {
               color: "#fff",
               backgroundColor: "#666",
@@ -3400,26 +3523,7 @@
           series: [{
             name: "Budget vs spending",
             type: "radar",
-            data: [{
-              value: [4200, 3000, 20000, 35000, 50000, 18000],
-              name: "Allocated Budget"
-            },
-            {
-              value: [5000, 14000, 28000, 26000, 42000, 21000],
-              name: "Actual Spending",
-              areaStyle: {
-                color: new this.$echarts.graphic.RadialGradient(0.1, 0.6, 1, [{
-                  color: "rgba(255, 145, 124, 0.1)",
-                  offset: 0
-                },
-                {
-                  color: "rgba(255, 145, 124, 0.9)",
-                  offset: 1
-                }
-                ])
-              }
-            }
-            ]
+            data: series,
           }]
         };
         barChart.setOption(option);
@@ -3591,7 +3695,14 @@
     position: relative;
     z-index: 999;
   }
-
+  .bottom {
+    display:flex ;
+    color: #fff;
+    font-size: 22px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 10px 10px;
+  }
   .liSpan {
     width: 100%;
     margin-top: 3.2%;
