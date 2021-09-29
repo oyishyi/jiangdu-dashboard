@@ -224,12 +224,19 @@
                 <td>11亩</td>
               </tr>
             </table> -->
-            <p>{{echartsData.COMPANY_ADDRESS}}</p>
-            <p>{{echartsData.belongOrg}}</p>
-            <p>{{echartsData.econKind}}</p>
-            <p>{{echartsData.INDUSTRY}}</p>
-            <p>{{echartsData.historyNames}}</p>
-            <p>{{echartsData.policy}}</p>
+            <p><span>公司：</span>{{echartsData.COMPANY_NAME}}</p>
+            <p><span>地址：</span>{{echartsData.COMPANY_ADDRESS}}</p>
+            <p><span>法人：</span>{{echartsData.operName}}</p>
+            <p><span>监管局：</span>{{echartsData.belongOrg}}</p>
+            <p><span>经济型：</span>{{echartsData.econKind}}</p>
+            <p><span>注册资金：</span>{{echartsData.REGISTER_CURRENCY}}</p>
+            <p><span>注册资本：</span>{{echartsData.tag_registCapi}}</p>
+            <p><span>行业类型：</span>{{echartsData.INDUSTRY}}</p>
+            <p><span>公司服务：</span>{{echartsData.CAP}}</p>
+            <p><span>历史名字：</span>{{echartsData.historyNames}}</p>
+            <p><span>公司类型：</span>{{echartsData.COMPANY_TYPE}}</p>
+            <p><span>创办日期：</span>{{echartsData.termStart}}</p>
+            <!-- <p><span>政府通知：</span>{{echartsData.policy}}</p> -->
           </div>
         </div>
       </div>
@@ -352,11 +359,6 @@
     },
     data() {
       return {
-        list1: {},
-        list2: {},
-        list3: {},
-        list4: {},
-        list5: {},
         echartsData: {},
         messageData: [{
           des: "发布消息XXX"
@@ -1609,6 +1611,8 @@
     ],
      Index: '0',
      nun: '',
+     colors: '',
+     value: '扬州宁达贵金属有限公司',
       };
     },
     created() {
@@ -1619,11 +1623,17 @@
       // this.index
       echartsData: {
         handler(val,oldval) {
-          console.log(val);
+          // console.log(val);
           this.drawRadar(val)
           this.drawGraph()
         }
       },
+      colors: {
+        handler(val) {
+          this.drawMap()
+          console.log(val);
+        }
+      }
     },
     methods: {
       drawMap() {
@@ -1632,6 +1642,8 @@
         var option;
         var that = this
         var list = []
+        // var value = ''
+        var color = this.colors
         this.listData.forEach((item, index) =>{
           var obj = {
             name: item.COMPANY_NAME,
@@ -3041,13 +3053,18 @@
               type: 'effectScatter',
               coordinateSystem: 'bmap',
               data: list,
-              symbolSize: 7,
+              symbolSize: 20,
               encode: {
                 value: 2
               },
-              // symbolSize: function (val) {
-              //     return val[2] / 10;
-              //   },
+              select: {
+                itemStyle: {
+                  color: '#b50205'
+                },
+                label: {
+                  show: false
+                }
+              },
               showEffectOn: 'render',
               rippleEffect: {
                 brushType: 'stroke'
@@ -3057,13 +3074,27 @@
                 position: 'right',
                 show: true
               },
-              color: '#5EA6FE',
+              // color: this.colors,
               itemStyle: {
                 shadowBlur: 12,
                 shadowColor: '#5EA6FE',
+                normal: {
+                   color: function(params) {
+                      var key = params.name;
+                      // console.log(params);
+                      console.log(key);
+                      console.log(that.value);
+                      if(key === that.value){
+                          return "#FE8463";
+                      }else{
+                          return "#5EA6FE";
+                      }
+                  }
+                },
               },
               emphasis: {
-                scale: true
+                scale: true,
+                // color: 'red',
               },
               zlevel: 2
             }
@@ -3072,11 +3103,16 @@
 
         option && myChart.setOption(option);
         myChart.on('click', function(params) {
+          // console.log(option);
+          // console.log(value);
+          // var value = '扬州宁达贵金属有限公司'
+          that.value = params.data.name
+          // console.log(value);
           if(params.data.name === "江苏峰业科技环保集团股份有限公司") {
             // console.log(that.listData);
             that.echartsData = that.listData[1]
-            // console.log(that.list1);
-            this.index = '1'
+            that.colors = '#e66'
+            // console.log(that.colors);
           } else if (params.data.name === "扬州宁达贵金属有限公司") {
             that.echartsData = that.listData[0]
             this.index = '0'
@@ -3091,7 +3127,6 @@
           }
           // console.log(that.echartsData);
         })
-
       },
       drawBar() {
         var data = [{
@@ -3275,7 +3310,7 @@
               emphasis: {
                 label: {
                   show: true,
-                  fontSize: '40',
+                  fontSize: '20',
                   fontWeight: 'bold'
                 }
               },
@@ -3365,12 +3400,11 @@
         var links = []
         var list = []
         var listSmall = []
-        let num = Math.random()*1000
-        // console.log(this.num);
+
         this.echartsData.network.forEach((item,index) =>{
-          let num = Math.random()*1000
-          console.log(num);
            listSmall.push(item.shareholder)
+           var x = [-200,100,520.567,30.99,-190.959,244,-590,550,-685,450,-30,490,112.4,-343.34,134.98,-88.9,74.99,-271.33,-200,100,520.567,30.99,-190.959,244,-590,550,-685,450,-30,490,112.4,-343.34,134.98,-88.9,74.99,-271.33,-190.959,244,-590,550,-685,450,-30,490,112.4,-343.34,134.98,-88.9,74.99,200,-270.99,-470.99,-80.975,320.444,189.73,-289,390,789,-424,99,424,99,-321,321.6,211.4,-354,48.28,231.88,]
+           var y =[200,-270.99,-470.99,-80.975,320.444,189.73,-289,390,789,-424,99,-321,321.6,211.4,-354,48.28,231.88,152.22,-270.99,-470.99,-80.975,320.444,189.73,-289,390,789,-424,99,-321,321.6,211.4,-354,48.28,231.88,152.22,-190.959,244,-590,550,-685,450,-30,490,112.4,-343.34,134.98,-88.9,74.99,590,550,-685,450,-30,490,112.4,-343.34,134.98,-88.9,74.99,-271.33,-200,100,520.567,30.99,-190.959,]
           let obj = {
             'category': 0,
             'id': index+1,
@@ -3378,8 +3412,8 @@
             'name': item.shareholder,
             'symbolSize': 12.8888,
             'value': 4,
-            'x': -num*(index+11.133),
-            'y': num*(index+33.33),
+            'x': x[index],
+            'y': y[index],
           }
           list.push(obj)
           // list.push(objct)
@@ -3389,8 +3423,8 @@
           "id": "0",
           "name": this.echartsData.network[0].company,
           "symbolSize": 19.12381,
-          "x": -638.922,
-          "y": 123.83,
+          "x": 300,
+          "y":100,
           "value": 28.685715,
           "category": 1
           }
@@ -3418,9 +3452,6 @@
               show: node.symbolSize > 30
             };
           });
-          console.log(links);
-          console.log(categories);
-          console.log(graph);
           option = {
             title: {
               text: "企业关系图",
@@ -3515,7 +3546,7 @@
                 }],
             axisName: {
               color: "#fff",
-              backgroundColor: "#666",
+              // backgroundColor: "#666",
               borderRadius: 3,
               padding: [3, 5]
             }
@@ -3699,9 +3730,20 @@
     display:flex ;
     color: #fff;
     font-size: 22px;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     flex-wrap: wrap;
     padding: 10px 10px;
+  }
+  .bottom p {
+    margin-left: 20px;
+    width: 32%;
+    line-height: 50px;
+    
+  }
+  .bottom p span {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
   }
   .liSpan {
     width: 100%;
