@@ -140,10 +140,18 @@
             </div>
             <div style="position:absolute;left:36%;top:25%">
               <p style="color:rgb(145 204 117);z-index:999;">{{echartsData.network[0].company}}</p>
-              <p v-for="(item,index) in echartsData.network.slice(0,3)" :key="index" style="color:rgb(84 112 198);">
-                {{item.shareholder}}
+              <!-- <div v-for="(item,index) in echartsData.network" :key="index">
+                <p v-if="item.type =='自然人股东'" style="color:rgb(84 112 198);">{{echartsData.network.length}}</p>
+              </div> -->
+              <p style="color:rgb(84 112 198);">
+                <span>法人：</span>（{{flist.length}}个）
               </p>
-              
+              <p style="color:rgb(84 112 198);">
+                <span>自然人股东：</span>（{{zList.length}}个）
+              </p>
+              <p style="color:rgb(84 112 198);">
+                <span>内资合伙企业：</span>（{{nlist.length}}个）
+              </p>
             </div>
             <!-- 地图 -->
             <div class="map" id="map"></div>
@@ -342,8 +350,8 @@
       this.drawBar();
       this.drawRadar();
       const table = this.$refs.table;
-      echartsData.network.slice(0,4)
-      console.log(echartsData.network.slice(0,4));
+      // echartsData.network.slice(0,4)
+      // console.log(echartsData.network.slice(0,4));
       // 拿到表格中承载数据的div元素
       //let scrollHeight = this.$refs.table.bodyWrapper.scrollHeight;
 
@@ -1618,6 +1626,9 @@
         "locations": "565;1040;567"
     }
         ],
+        flist: [],
+        zList: [],
+        nlist: [],
      Index: '0',
      nun: '',
      colors: '',
@@ -1626,7 +1637,6 @@
     },
     created() {
       this.echartsData = this.listData[0]
-            console.log( this.echartsData)
     },
     watch: {
       // this.index
@@ -1635,16 +1645,29 @@
           // console.log(val);
           this.drawRadar(val)
           this.drawGraph()
+          this.funData()
         }
       },
       colors: {
         handler(val) {
           this.drawMap()
-          console.log(val);
+          // console.log(val);
         }
-      }
+      },
     },
     methods: {
+      funData() {
+         this.echartsData.network.forEach((item,index) =>{
+        // console.log(item);
+        if(item.type === '自然人股东') {
+          this.zList.push(item)
+        } else if(item.type === '企业法人') {
+          this.flist.push(item)
+        } else {
+          this.nlist.push(item)
+        }
+      })
+      },
       drawMap() {
         var chartDom = document.getElementById('map');
         var myChart = this.$echarts.init(chartDom);
@@ -3117,19 +3140,24 @@
           if(params.data.name === "江苏峰业科技环保集团股份有限公司") {
             // console.log(that.listData);
             that.echartsData = that.listData[1]
-            that.colors = '#e66'
+            // that.colors = '#e66'
+            // this.funData()
             // console.log(that.colors);
           } else if (params.data.name === "扬州宁达贵金属有限公司") {
             that.echartsData = that.listData[0]
             this.index = '0'
+            // this.funData()
           } else if (params.data.name === "江苏天雨环保集团有限公司") {
             that.echartsData = that.listData[2]
             this.index = '2'
+            // this.funData()
           } else if(params.data.name === "江苏捷凯电力器材有限公司") {
             that.echartsData = that.listData[3]
             this.index = '3'
+            // this.funData()
           } else if(params.data.name = "江苏江都农村商业银行股份有限公司") {
             that.echartsData = that.listData[4]
+            // this.funData()
           }
           // console.log(that.echartsData);
         })
@@ -3557,19 +3585,19 @@
                 },
                 {
                     "name": "经营管理",
-                    "max": 16000
+                    "max": 10000
                 },
                 {
                     "name": "科技创新",
-                    "max": 30000
+                    "max": 10000
                 },
                 {
                     "name": "只能创造",
-                    "max": 38000
+                    "max": 10000
                 },
                 {
                     "name": "可持续发展",
-                    "max": 52000
+                    "max": 10000
                 },
                 {
                     "name": "信用风险",
@@ -3592,10 +3620,10 @@
                 normal: {
                   show: true,
                   formatter: function(params) {
-                    return params.value
+                    return params.value/100+'%'
                   },
                   // formatter: '{c}({d}%)',
-                  color: 'red'
+                  color: 'yellow'
                 }
               }
               },
@@ -3791,20 +3819,20 @@
   .bottom {
     display:flex ;
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     /* justify-content: space-around; */
     flex-wrap: wrap;
-    padding: 10px 10px;
+    padding: 10px 5px;
   }
   .bottom p {
-    margin-left: 20px;
-    width: 31.5%;
-    line-height: 40px;
+    margin-left: 10px;
+    width: 32.6%;
+    line-height: 35px;
     
   }
   .bottom p span {
     display: inline-block;
-    width: 150px;
+    width: 120px;
     text-align: right;
   }
   .liSpan {
