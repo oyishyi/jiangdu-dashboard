@@ -71,7 +71,7 @@
             </table> -->
             <div style="width: 90%; height: 90%; margin-left:5%" id="radar"></div>
           </div>
-          <div class="baseBoxRight right">
+          <div class="baseBoxRight right">  
             <ul class="plant">
               <li>
                 <a class="jumps" href="">
@@ -136,7 +136,15 @@
               </li>
             </ul>
 
-            <div class="graph" id="graph"></div>
+            <div class="graph" id="graph">
+            </div>
+            <div style="position:absolute;left:36%;top:25%">
+              <p style="color:rgb(145 204 117);z-index:999;">{{echartsData.network[0].company}}</p>
+              <p v-for="(item,index) in echartsData.network.slice(0,3)" :key="index" style="color:rgb(84 112 198);">
+                {{item.shareholder}}
+              </p>
+              
+            </div>
             <!-- 地图 -->
             <div class="map" id="map"></div>
           </div>
@@ -334,7 +342,8 @@
       this.drawBar();
       this.drawRadar();
       const table = this.$refs.table;
-;
+      echartsData.network.slice(0,4)
+      console.log(echartsData.network.slice(0,4));
       // 拿到表格中承载数据的div元素
       //let scrollHeight = this.$refs.table.bodyWrapper.scrollHeight;
 
@@ -383,34 +392,34 @@
         }
         ],
         listData: [
-    {
+       {
         "radar": {
-            "indicator": [
-                {
-                    "name": "基础能力",
-                    "max": 6500
-                },
-                {
-                    "name": "经营管理",
-                    "max": 16000
-                },
-                {
-                    "name": "科技创新",
-                    "max": 30000
-                },
-                {
-                    "name": "只能创造",
-                    "max": 38000
-                },
-                {
-                    "name": "可持续发展",
-                    "max": 52000
-                },
-                {
-                    "name": "信用风险",
-                    "max": 25000
-                }
-            ],
+          "indicator": [
+            {
+                "name": "基础能力",
+                "max": 6500
+            },
+            {
+                "name": "经营管理",
+                "max": 16000
+            },
+            {
+                "name": "科技创新",
+                "max": 30000
+            },
+            {
+                "name": "只能创造",
+                "max": 38000
+            },
+            {
+                "name": "可持续发展",
+                "max": 52000
+            },
+            {
+                "name": "信用风险",
+                "max": 25000
+            }
+        ],
             "series": [
                 {
                     "name": "Budget vs spending",
@@ -1608,7 +1617,7 @@
         "policy": "关于印发《仪征市金融支持高层次人才创业创新政策支持意见》的通知;印发关于进一步加大金融支持实体经济发展的实施意见的通知;关于印发《仪征市小微企业“政银企合作”业务管理办法》的通知",
         "locations": "565;1040;567"
     }
-    ],
+        ],
      Index: '0',
      nun: '',
      colors: '',
@@ -3081,9 +3090,6 @@
                 normal: {
                    color: function(params) {
                       var key = params.name;
-                      // console.log(params);
-                      console.log(key);
-                      console.log(that.value);
                       if(key === that.value){
                           return "#FE8463";
                       }else{
@@ -3301,19 +3307,38 @@
               itemStyle: {
                 borderRadius: 10,
                 borderColor: '#020816',
-                borderWidth: 2
+                borderWidth: 2,
+                emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    },
+                    normal:{ 
+                        label:{ 
+                            show: true, 
+                            formatter: '{b} : {c} ({d}%)' 
+                        }, 
+                        labelLine :{show:true} 
+                    } 
               },
               label: {
                 show: false,
                 position: 'center'
               },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '20',
-                  fontWeight: 'bold'
-                }
-              },
+              // emphasis: {
+              //   label: {
+              //     show: true,
+              //     fontSize: '20',
+              //     fontWeight: 'bold'
+              //   }
+              // },
+              //  normal:{ 
+              //   label:{ 
+              //       show: true, 
+              //       formatter: '{b} : {c} ({d}%)' 
+              //   }, 
+              //   labelLine :{show:true} 
+              // }, 
               labelLine: {
                 show: false
               },
@@ -3434,19 +3459,6 @@
           graph
         ) {
           myChart.hideLoading();
-          // let node = graph.nodes.splice(0,10)
-          // node.forEach((item) => {
-          //   delete item.x
-          //   delete item.y
-          // })
-          // console.log(node);
-          // this.echartsData.network.forEach((item,index) =>{
-          // let obj = {
-          //   symbolSize: item.company,
-          //   value: item.shareholder
-          //  }
-          //  node.push
-          // })
           graph.nodes.forEach(function (node) {
             node.label = {
               show: node.symbolSize > 30
@@ -3505,11 +3517,17 @@
         var list = {};
         var list1 = {}
         var series = []
+        var datalist = []
         list1 = this.echartsData.radar
-        series = list1.series[0].data
+        datalist = list1.series[0].data
+        series = datalist[2].value
+        console.log(datalist[2]);
         // console.log(series[0]);
         list = val.radar;
-        series = list.series[0].data
+         datalist = list.series[0].data
+        series = datalist[2].value
+       var name = datalist[2].name
+        console.log(series);
         var option = {
           color: ["#4992ff", "#7cffb2"],
           textStyle: {
@@ -3518,11 +3536,24 @@
             fontSize: 12
           },
           darkMode: true,
+          // visualMap: {
+          //   top: 'top',
+          //   left: 10,
+          //   color: ['red', 'yellow'],
+          //   calculable: true
+          // },
+           legend: {
+            data: [name],
+            textStyle: {
+              color: "#4992ff",
+            }
+          },
           radar: {
             // shape: 'circle',
             indicator: [ {
                     "name": "基础能力",
-                    "max": 6500
+                    "max": 10000,
+                    // axisLabel: {show: true, textStyle: {fontSize: 18, color: '#333'}},
                 },
                 {
                     "name": "经营管理",
@@ -3554,7 +3585,38 @@
           series: [{
             name: "Budget vs spending",
             type: "radar",
-            data: series,
+            data: [{
+              value: series,
+              name:name,
+              label: {
+                normal: {
+                  show: true,
+                  formatter: function(params) {
+                    return params.value
+                  },
+                  // formatter: '{c}({d}%)',
+                  color: 'red'
+                }
+              }
+              },
+            ],
+            itemStyle: {
+                normal: {
+                    color: '#2dc76d',
+                },
+                formatter: '{c}%'
+            },
+            areaStyle: {
+              normal: {
+                  color: '#2dc76d',
+                  opacity: 0.5
+              }              
+            },
+            lineStyle: {
+              normal: {
+                  color: '#2dc76d',
+              }
+            },
           }]
         };
         barChart.setOption(option);
@@ -3729,15 +3791,15 @@
   .bottom {
     display:flex ;
     color: #fff;
-    font-size: 22px;
+    font-size: 18px;
     /* justify-content: space-around; */
     flex-wrap: wrap;
     padding: 10px 10px;
   }
   .bottom p {
     margin-left: 20px;
-    width: 32%;
-    line-height: 50px;
+    width: 31.5%;
+    line-height: 40px;
     
   }
   .bottom p span {
@@ -3862,8 +3924,8 @@
     animation: marqueeTop 20s infinite linear;
   }
   .scroll-content p {
-    line-height: 50px;
-    font-size: 22px;
+    line-height: 40px;
+    font-size: 16px;
     margin-left: 10px;
   }
   .boxVideo video {
