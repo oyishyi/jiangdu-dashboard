@@ -2885,6 +2885,9 @@
         option = {
           title: {
             text: '江都区企业分布',
+             textStyle:{
+              color:"white"
+            },
             // subtext: 'data from PM25.in',
             // sublink: 'http://www.pm25.in',
             left: 'center'
@@ -2893,7 +2896,7 @@
             trigger: 'item'
           },
           bmap: {
-            center: [119.6345481, 32.188564],
+            center: [119.724832, 32.566547],
             zoom: 11,
             roam: true,
             mapStyle: {
@@ -3466,6 +3469,9 @@
           });
           option = {
             title: {
+               textStyle:{
+                 color:"white"
+               },
               text: "企业关系图",
               top: "bottom",
               left: "right"
@@ -4156,4 +4162,10 @@
   .el-table th.is-leaf {
     border-bottom: 1px solid transparent;
   }
+  .BMap_cpyCtrl {
+    display:none;
+}
+.anchorBL{
+    display:none;
+}
 </style>
