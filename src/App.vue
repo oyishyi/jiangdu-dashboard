@@ -148,7 +148,6 @@
             <p><span>历史名字：</span>{{ echartsData.historyNames }}</p>
             <p><span>公司类型：</span>{{ echartsData.COMPANY_TYPE }}</p>
             <p><span>创办日期：</span>{{ echartsData.termStart }}</p>
-            <!-- <p><span>政府通知：</span>{{echartsData.policy}}</p> -->
           </div>
         </div>
       </div>
@@ -3136,5 +3135,11 @@ a:hover {
 
 .anchorBL {
   display: none;
+}
+
+.bottom p {
+    margin-left: 0px;
+    width: 32.6%;
+    line-height: 30px;
 }
 </style>
