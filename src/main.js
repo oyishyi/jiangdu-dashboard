@@ -9,7 +9,8 @@ import App from './App'
 //import echarts from 'echarts'
 import * as echarts from 'echarts';
 import $ from 'jquery'
-
+import titleComponent from './title.component.vue';
+Vue.component('vue-title', titleComponent);
 
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 Vue.config.productionTip = false

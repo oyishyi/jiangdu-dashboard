@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <vue-title title="江都区企业数字化赋能平台"></vue-title>
     <div class="nav">江都区企业数字化赋能平台</div>
     <div class="nav_btn">
       <div class="btn_left">
@@ -37,7 +38,7 @@
           <div class="baseBoxLeft left">
             <div class="boxTitle">企业数字画像</div>
             <img src="./img/left.png" alt="" />
-           
+
             <div
               style="width: 90%; height: 90%; margin-left: 5%"
               id="radar"
@@ -109,7 +110,7 @@
             </ul>
 
             <div class="graph" id="graph"></div>
-            <div style="position: absolute;  bottom: -5%;left:40%">
+            <div style="position: absolute; bottom: -5%; left: 40%">
               <p style="color: #fe8463; z-index: 999">
                 {{ echartsData.network[0].company }}
               </p>
@@ -250,6 +251,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import "echarts/extension/bmap/bmap";
 export default {
@@ -1797,7 +1799,11 @@ export default {
             [119.466325, 32.63266],
             [119.461982, 32.647683],
           ],
-          lineStyle: { normal: { color: "red" } },
+          lineStyle: {
+            normal: {
+              color: "red",
+            },
+          },
         },
       ];
 
@@ -2246,10 +2252,12 @@ export default {
               normal: {
                 label: {
                   show: true,
-                  fontSize:10,
+                  fontSize: 10,
                   formatter: "{b} : {c} ({d}%)",
                 },
-                labelLine: { show: true },
+                labelLine: {
+                  show: true,
+                },
               },
             },
             label: {
@@ -2380,7 +2388,9 @@ export default {
         let obj = {
           category: 0,
           id: index + 1,
-          label: { show: false },
+          label: {
+            show: false,
+          },
           name: item.shareholder,
           symbolSize: 12.8888,
           value: 4,
@@ -2417,7 +2427,7 @@ export default {
                 color: "white",
               },
               text: "企业关系图",
-            left: "center",
+              left: "center",
             },
             tooltip: {},
             legend: [
@@ -2585,14 +2595,17 @@ export default {
 <style>
 @import "./css/reset.css";
 @import "./css/video-js.css";
+
 @keyframes marqueeTop {
   from {
     transform: translate(0, 0);
   }
+
   to {
     transform: translate(0, -50%);
   }
 }
+
 .boxRader {
   position: relative;
   width: 100%;
@@ -2744,6 +2757,7 @@ export default {
   position: relative;
   z-index: 999;
 }
+
 .bottom {
   display: flex;
   color: #fff;
@@ -2752,16 +2766,19 @@ export default {
   flex-wrap: wrap;
   padding: 10px 5px;
 }
+
 .bottom p {
   margin-left: 10px;
   width: 32.6%;
   line-height: 35px;
 }
+
 .bottom p span {
   display: inline-block;
   width: 120px;
   text-align: right;
 }
+
 .liSpan {
   width: 100%;
   margin-top: 3.2%;
@@ -2871,6 +2888,7 @@ a:hover {
   position: relative;
   overflow: hidden;
 }
+
 .boxVideo .scroll-content {
   color: #fff;
   position: absolute;
@@ -2878,11 +2896,13 @@ a:hover {
   left: 0;
   animation: marqueeTop 20s infinite linear;
 }
+
 .scroll-content p {
   line-height: 40px;
   font-size: 0.8vw;
   margin-left: 10px;
 }
+
 .boxVideo video {
   width: 100%;
   height: 100%;
@@ -3109,9 +3129,11 @@ a:hover {
 .el-table th.is-leaf {
   border-bottom: 1px solid transparent;
 }
+
 .BMap_cpyCtrl {
   display: none;
 }
+
 .anchorBL {
   display: none;
 }
