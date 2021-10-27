@@ -2535,7 +2535,7 @@ export default {
             },
             {
               name: "信用风险",
-              max: 25000,
+              max: 10000,
             },
           ],
           axisName: {
@@ -2557,7 +2557,7 @@ export default {
                   normal: {
                     show: true,
                     formatter: function (params) {
-                      return params.value / 100 + "%";
+                      return params.value / 100 + "分";
                     },
                     // formatter: '{c}({d}%)',
                     color: "yellow",
@@ -2569,22 +2569,27 @@ export default {
                 name: '全部企业',
                 itemStyle: {
                   normal: {
-                    color: "blue",
+                    color: "rgb(254 203 193)",
                   },
                 },
                 lineStyle: {
-              normal: {
-                color: "blue",
+                normal: {
+                  color: "rgb(254 203 193)",
+                },
               },
-            },
-                
+              areaStyle: {
+              normal: {
+                color: "rgb(254 203 193)",
+                opacity: 0.5,
+              },
               }
+            },
             ],
             itemStyle: {
               normal: {
                 color: "#2dc76d",
               },
-              formatter: "{c}%",
+              formatter: "{c}分",
             },
             areaStyle: {
               normal: {
