@@ -2504,7 +2504,7 @@ export default {
         //   calculable: true
         // },
         legend: {
-          data: [name],
+          data: [name, '全部企业'],
           textStyle: {
             color: "#4992ff",
           },
@@ -2564,6 +2564,21 @@ export default {
                   },
                 },
               },
+              {
+                value: [5000, 8400, 2800, 3600, 4200, 6100],
+                name: '全部企业',
+                itemStyle: {
+                  normal: {
+                    color: "blue",
+                  },
+                },
+                lineStyle: {
+              normal: {
+                color: "blue",
+              },
+            },
+                
+              }
             ],
             itemStyle: {
               normal: {
