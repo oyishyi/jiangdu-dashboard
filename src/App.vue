@@ -2837,7 +2837,7 @@ export default {
   font-size: 0.8vw;
   /* justify-content: space-around; */
   flex-wrap: wrap;
-  padding: 10px 5px;
+  padding: 15px;
 }
 
 .bottom p {
@@ -2846,14 +2846,13 @@ export default {
   line-height: 35px;
 }
 .bottom .scope  {
-  margin-left: 10px;
   width: 90%;
   line-height: 35px;
 }
 .bottom p span {
   display: inline-block;
   width: 120px;
-  text-align: right;
+  text-align: left;
 }
 
 .liSpan {
