@@ -3,7 +3,7 @@
     <vue-title title="江都区企业数字化赋能平台"></vue-title>
     <div class="nav">江都区企业数字化赋能平台</div>
     <div class="nav_btn">
-      <div class="btn_left">
+      <!-- <div class="btn_left">
         <a href="">
           <div class="btn_list listActive">主页</div>
         </a>
@@ -16,8 +16,8 @@
         <a href="">
           <div class="btn_list">生长监测</div>
         </a>
-      </div>
-      <div class="btn_right">
+      </div> -->
+      <!-- <div class="btn_right">
         <a href="">
           <div class="btn_list">生产加工</div>
         </a>
@@ -30,7 +30,7 @@
         <a href="">
           <div class="btn_list">数据中心</div>
         </a>
-      </div>
+      </div> -->
     </div>
     <div class="content">
       <div class="centerBox">
@@ -52,27 +52,31 @@
                     <span>入驻企业</span>
                     <img src="./img/qqzmj.png" alt="" />
                   </div>
-                  <p class="">350000</p>
+                  <p class="" v-if="flag">
+                    {{ overview.SAP_JIANGDU_USERS_REGISTERED }}
+                  </p>
                   <span class="spans3"></span>
                 </a>
               </li>
               <li>
                 <a class="jumps" href="">
                   <div>
-                    <span>建筑面积</span>
+                    <span>平台推荐总数</span>
                     <img src="./img/ccc2.png" alt="" />
                   </div>
-                  <p class="">180</p>
+                  <p class="" v-if="flag">
+                    {{ overview.SAP_JIANGDU_RECOMMENDED_LIST }}
+                  </p>
                   <span class="spans2" style="background: #499bff"></span>
                 </a>
               </li>
               <li>
                 <a class="jumps" href="">
                   <div>
-                    <span>税收总额</span>
+                    <span>共享设备数</span>
                     <img src="./img/ccc.png" alt="" />
                   </div>
-                  <p class="">82000</p>
+                  <p class="" v-if="flag">{{ overview.SAP_JIANGDU_ASSETS }}</p>
                   <span class="spans3" style="background: #f2ce43"></span>
                 </a>
               </li>
@@ -83,7 +87,9 @@
                     <img class="flexright" src="./img/cy.png" alt="" />
                   </div>
 
-                  <p class="plantNum1">3207</p>
+                  <p class="plantNum1" v-if="flag">
+                    {{ overview.SAP_JIANGDU_TECH_INNOS }}
+                  </p>
                   <span class="spans0"></span>
                 </a>
               </li>
@@ -93,7 +99,9 @@
                     <span class="flexLeft">共享人才数</span>
                     <img class="flexright" src="./img/cq.png" alt="" />
                   </div>
-                  <p class="plantNum1">157</p>
+                  <p class="plantNum1" v-if="flag">
+                    {{ overview.SAP_JIANGDU_TALENTS }}
+                  </p>
                   <span class="spans1"></span>
                 </a>
               </li>
@@ -103,7 +111,7 @@
                     <span>政策申请</span>
                     <img src="./img/cn.png" alt="" />
                   </div>
-                  <p class="">360000</p>
+                  <p class="" v-if="flag">{{ overview.SAP_JIANGDU_POLICYS }}</p>
                   <span class="spans2"></span>
                 </a>
               </li>
@@ -111,9 +119,9 @@
 
             <div class="graph" id="graph"></div>
             <div style="position: absolute; bottom: -5%; left: 40%">
-              <p style="color: #fe8463; z-index: 999">
+              <!-- <p style="color: #fe8463; z-index: 999">
                 {{ echartsData.network[0].company }}
-              </p>
+              </p> -->
               <!-- <div v-for="(item,index) in echartsData.network" :key="index">
                 <p v-if="item.type =='自然人股东'" style="color:rgb(84 112 198);">{{echartsData.network.length}}</p>
               </div> -->
@@ -136,18 +144,16 @@
           <img src="./img/down.png" alt="" />
           <div class="boxTitle2" style="width: 26%">统计数据</div>
           <div class="csbaseBox1 bottom">
-            <p><span>公司：</span>{{ echartsData.COMPANY_NAME }}</p>
-            <p><span>地址：</span>{{ echartsData.COMPANY_ADDRESS }}</p>
-            <p><span>法人：</span>{{ echartsData.operName }}</p>
-            <p><span>监管局：</span>{{ echartsData.belongOrg }}</p>
-            <p><span>经济型：</span>{{ echartsData.econKind }}</p>
-            <p><span>注册资金：</span>{{ echartsData.REGISTER_CURRENCY }}</p>
-            <p><span>注册资本：</span>{{ echartsData.tag_registCapi }}</p>
-            <p><span>行业类型：</span>{{ echartsData.INDUSTRY }}</p>
-            <p><span>公司服务：</span>{{ echartsData.CAP }}</p>
-            <p><span>历史名字：</span>{{ echartsData.historyNames }}</p>
-            <p><span>公司类型：</span>{{ echartsData.COMPANY_TYPE }}</p>
-            <p><span>创办日期：</span>{{ echartsData.termStart }}</p>
+            <p><span>公司：</span>{{ conpanyDes.COMPANY_NAME }}</p>
+            <p><span>地址：</span>{{ conpanyDes.COMPANY_ADDRESS }}</p>
+            <p><span>法人：</span>{{ conpanyDes.LEGAL_REPRESENTATIVE }}</p>
+            <p><span>公司等级：</span>{{ conpanyDes.LEVEL }}</p>
+            <p><span>公司类型：</span>{{ conpanyDes.COMPANY_TYPE }}</p>
+            <p><span>注册资金：</span>{{ conpanyDes.REGISTER_CURRENCY }}</p>
+            <p><span>注册资本：</span>{{ conpanyDes.REGISTER_CURRENCY }}</p>
+            <p><span>行业类型：</span>{{ conpanyDes.INDUSTRY }}</p>
+            <p><span>公司服务：</span>{{ conpanyDes.CAP }}</p>
+            <p class="scope"><span>经营范围：</span>{{ conpanyDes.BUSINESS_SCOPE }}</p>
           </div>
         </div>
       </div>
@@ -253,14 +259,19 @@
 
 <script>
 import "echarts/extension/bmap/bmap";
+import { getReportOverview, getReportData } from "@/api/dashboard";
 export default {
   name: "App",
   mounted() {
+    var search = window.location.search;
+    this.userid = this.getSearchString("userid", search);
+    console.log(this.userid);
+    this.getData();
     this.drawMap();
-    this.drawGraph();
+    //this.drawGraph();
     this.drawPie();
     this.drawBar();
-    this.drawRadar();
+    //this.drawRadar();
     const table = this.$refs.table;
     // echartsData.network.slice(0,4)
     // console.log(echartsData.network.slice(0,4));
@@ -288,6 +299,12 @@ export default {
   },
   data() {
     return {
+      datas: {},
+      userid: null,
+      flag: false,
+      conpanyDes:{},
+      overview: {},
+      radarData:{},
       echartsData: {},
       messageData: [
         {
@@ -1441,18 +1458,18 @@ export default {
     };
   },
   created() {
-    this.echartsData = this.listData[0];
+    //this.echartsData = this.listData[0];
   },
   watch: {
     // this.index
-    echartsData: {
-      handler(val, oldval) {
-        // console.log(val);
-        this.drawRadar(val);
-        this.drawGraph();
-        this.funData();
-      },
-    },
+    // echartsData: {
+    //   handler(val, oldval) {
+    //     // console.log(val);
+    //     this.drawRadar(val);
+    //     //this.drawGraph();
+    //     this.funData();
+    //   },
+    // },
     colors: {
       handler(val) {
         this.drawMap();
@@ -1461,6 +1478,44 @@ export default {
     },
   },
   methods: {
+    getSearchString(key, Url) {
+      var str = Url;
+      str = str.substring(1, str.length); // 获取URL中?之后的字符（去掉第一位的问号）
+      // 以&分隔字符串，获得类似name=xiaoli这样的元素数组
+      var arr = str.split("&");
+      var obj = new Object();
+
+      // 将每一个数组元素以=分隔并赋给obj对象
+      for (var i = 0; i < arr.length; i++) {
+        var tmp_arr = arr[i].split("=");
+        obj[decodeURIComponent(tmp_arr[0])] = decodeURIComponent(tmp_arr[1]);
+      }
+      return obj[key];
+    },
+    getData() {
+      getReportData(this.userid).then((res) => {
+        
+        this.conpanyDes = res;
+        this.radarData["value"] = [
+          res["BASIC_ABILITY"]*100,
+          res["JINGYING_MANAGEMENT"]*100,
+          res["TECH_INNO"]*100,
+          res["IOT"]*100,
+          res["CONTINOUS_DEVELOP"]*100,
+          res["CREDIT_RISK"]*100,
+        ];
+        this.radarData["name"] = res.COMPANY_NAME;
+        this.drawRadar()
+
+      });
+      getReportOverview().then((res) => {
+        res.forEach((r) => {
+          this.overview[r.table] = r.TOTAL;
+        });
+        this.flag = true;
+        console.log(this.overview);
+      });
+    },
     funData() {
       this.echartsData.network.forEach((item, index) => {
         // console.log(item);
@@ -2469,7 +2524,7 @@ export default {
         }
       );
     },
-    drawRadar(val) {
+    drawRadar() {
       const barChart = this.$echarts.init(
         document.getElementById("radar"),
         "shine"
@@ -2479,16 +2534,15 @@ export default {
       var list1 = {};
       var series = [];
       var datalist = [];
-      list1 = this.echartsData.radar;
-      datalist = list1.series[0].data;
-      series = datalist[2].value;
-      console.log(datalist[2]);
+      var name  = this.radarData.name;
+      //datalist = list1.series[0].data;
+      series = this.radarData.value;
       // console.log(series[0]);
-      list = val.radar;
-      datalist = list.series[0].data;
-      series = datalist[2].value;
-      var name = datalist[2].name;
-      console.log(series);
+      //list = val.radar;
+      // datalist = list.series[0].data;
+      // series = datalist[2].value;
+      // var name = datalist[2].name;
+      
       var option = {
         color: ["#4992ff", "#7cffb2"],
         textStyle: {
@@ -2504,7 +2558,7 @@ export default {
         //   calculable: true
         // },
         legend: {
-          data: [name, '全部企业'],
+          data: [name, "全部企业"],
           textStyle: {
             color: "#4992ff",
           },
@@ -2566,24 +2620,24 @@ export default {
               },
               {
                 value: [5000, 8400, 2800, 3600, 4200, 6100],
-                name: '全部企业',
+                name: "全部企业",
                 itemStyle: {
                   normal: {
                     color: "rgb(254 203 193)",
                   },
                 },
                 lineStyle: {
-                normal: {
-                  color: "rgb(254 203 193)",
+                  normal: {
+                    color: "rgb(254 203 193)",
+                  },
+                },
+                areaStyle: {
+                  normal: {
+                    color: "rgb(254 203 193)",
+                    opacity: 0.5,
+                  },
                 },
               },
-              areaStyle: {
-              normal: {
-                color: "rgb(254 203 193)",
-                opacity: 0.5,
-              },
-              }
-            },
             ],
             itemStyle: {
               normal: {
@@ -2791,7 +2845,11 @@ export default {
   width: 32.6%;
   line-height: 35px;
 }
-
+.bottom .scope  {
+  margin-left: 10px;
+  width: 90%;
+  line-height: 35px;
+}
 .bottom p span {
   display: inline-block;
   width: 120px;
@@ -3158,8 +3216,8 @@ a:hover {
 }
 
 .bottom p {
-    margin-left: 0px;
-    width: 32.6%;
-    line-height: 30px;
+  margin-left: 0px;
+  width: 32.6%;
+  line-height: 30px;
 }
 </style>
