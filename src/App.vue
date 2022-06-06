@@ -140,7 +140,7 @@
 
         <div class="baseBox centerMainBox2" style="height: 30%">
           <img src="./img/down.png" alt="" />
-          <div class="boxTitle2" style="width: 26%">统计数据</div>
+          <div class="boxTitle2" style="width: 26%">企业信息看板</div>
           <div class="csbaseBox1 bottom">
             <p><span>公司：</span>{{ conpanyDes.COMPANY_NAME }}</p>
             <p><span>地址：</span>{{ conpanyDes.COMPANY_ADDRESS }}</p>
@@ -244,7 +244,7 @@
         <div class="baseBox baseBox3" style="height: 28.9%">
           <img src="./img/right3.png" alt="" />
           <!-- 四个角描边 end -->
-          <div class="boxTitle2">税收分布</div>
+          <div class="boxTitle2">服务开通个数</div>
           <div
             class="boxRader"
             id="mains"
@@ -415,21 +415,18 @@ export default {
     drawBar() {
       var data = [
         {
-          name: "制造业",
-          value: 282.76,
+          name: "SAC",
+          value: 10,
         },
         {
-          name: "建筑业",
-          value: 1051.1,
+          name: "RPA",
+          value: 5,
         },
         {
-          name: "采矿业",
-          value: 50,
+          name: "进销存",
+          value: 5,
         },
-        {
-          name: "金融业",
-          value: 158.07,
-        },
+      
       ];
       var xData = [],
         yData = [];
@@ -483,8 +480,6 @@ export default {
             axisTick: {
               show: false,
             },
-            min: 0,
-            max: 1200,
             axisLine: {
               lineStyle: {
                 color: "#0c3b71",
@@ -492,14 +487,13 @@ export default {
             },
             axisLabel: {
               color: "rgb(170,170,170)",
-              formatter: "{value} (亿元)",
+              formatter: "{value} (个)",
             },
           },
           {
             type: "value",
             gridIndex: 0,
-            min: min,
-            max: 100,
+           
             splitNumber: 12,
             splitLine: {
               show: false,
@@ -523,9 +517,9 @@ export default {
         ],
         series: [
           {
-            name: "合格率",
+         
             type: "bar",
-            barWidth: "30%",
+            barWidth: "20%",
             xAxisIndex: 0,
             yAxisIndex: 0,
             itemStyle: {
@@ -553,7 +547,7 @@ export default {
           {
             name: "背景",
             type: "bar",
-            barWidth: "50%",
+            barWidth: "40%",
             xAxisIndex: 0,
             yAxisIndex: 1,
             barGap: "-135%",
