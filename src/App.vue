@@ -118,21 +118,46 @@
             </ul>
             <el-row>
               <el-col :span="12"
-                ><line-chart class="chartLine" v-if="lineData.SAP_JIANGDU_POLICYS" :chartData="lineData.SAP_JIANGDU_POLICYS" title="最近一年上传政策"></line-chart>
+                ><line-chart
+                  class="chartLine"
+                  v-if="lineData.SAP_JIANGDU_POLICYS"
+                  :chartData="lineData.SAP_JIANGDU_POLICYS"
+                  title="最近一年上传政策"
+                ></line-chart>
               </el-col>
               <el-col :span="12">
-                <line-chart class="chartLine" v-if="lineData.SAP_JIANGDU_JINRONGHUIQIS" :chartData="lineData.SAP_JIANGDU_JINRONGHUIQIS" title="最近一年上架金融融资"></line-chart
+                <line-chart
+                  class="chartLine"
+                  v-if="lineData.SAP_JIANGDU_JINRONGHUIQIS"
+                  :chartData="lineData.SAP_JIANGDU_JINRONGHUIQIS"
+                  title="最近一年上架金融融资"
+                ></line-chart
               ></el-col>
             </el-row>
             <el-row>
               <el-col :span="8"
-                ><line-chart class="chartLine" v-if="lineData.SAP_JIANGDU_TALENTS" :chartData="lineData.SAP_JIANGDU_TALENTS" title="最近一年上架人才"></line-chart>
+                ><line-chart
+                  class="chartLine"
+                  v-if="lineData.SAP_JIANGDU_TALENTS"
+                  :chartData="lineData.SAP_JIANGDU_TALENTS"
+                  title="最近一年上架人才"
+                ></line-chart>
               </el-col>
               <el-col :span="8">
-                <line-chart class="chartLine" v-if="lineData.SAP_JIANGDU_ASSETS" :chartData="lineData.SAP_JIANGDU_ASSETS" title="最近一年发布设备"></line-chart
+                <line-chart
+                  class="chartLine"
+                  v-if="lineData.SAP_JIANGDU_ASSETS"
+                  :chartData="lineData.SAP_JIANGDU_ASSETS"
+                  title="最近一年发布设备"
+                ></line-chart
               ></el-col>
               <el-col :span="8">
-                <line-chart class="chartLine" v-if="lineData.SAP_JIANGDU_TECH_INNOS" :chartData="lineData.SAP_JIANGDU_TECH_INNOS" title="最近一年上传科创"></line-chart
+                <line-chart
+                  class="chartLine"
+                  v-if="lineData.SAP_JIANGDU_TECH_INNOS"
+                  :chartData="lineData.SAP_JIANGDU_TECH_INNOS"
+                  title="最近一年上传科创"
+                ></line-chart
               ></el-col>
             </el-row>
           </div>
@@ -178,7 +203,7 @@
                   <div class="boxVideo">
                     <div class="scroll-content">
                       <p v-for="(item, index) in messageData" :key="index">
-                        {{ item.COMPANY_NAME }} 发布 {{item.NAME}}
+                        {{ item.COMPANY_NAME }} 发布 {{ item.NAME }}
                       </p>
                     </div>
                     <!-- <el-table ref="table" :data="messageData" style="width: 100% ;height:100%" :show-header="false">
@@ -261,8 +286,10 @@ import {
   getReportOverview,
   getReportData,
   getLastEntry,
-  getService
+  getService,
+  getDefaultReportData,
 } from "@/api/dashboard";
+import { async, resolve } from "q";
 import LineChart from "./LineChart";
 
 export default {
@@ -270,9 +297,14 @@ export default {
   components: {
     LineChart,
   },
-  mounted() {
+  async mounted() {
     var search = window.location.search;
-    this.userid = this.getSearchString("userid", search);
+    var userid = this.getSearchString("userid", search);
+    if (typeof userid == "undefined") {
+      var userid = await this.getDefault();
+    }
+
+    this.userid = userid;
     console.log(this.userid);
     this.getData();
     this.drawPie();
@@ -312,9 +344,7 @@ export default {
       overview: {},
       radarData: {},
       echartsData: {},
-      messageData: [
-       
-      ],
+      messageData: [],
       lineData: {},
       flist: [],
       zList: [],
@@ -339,12 +369,18 @@ export default {
     //   },
     // },
     colors: {
-      handler(val) {
-        
-      },
+      handler(val) {},
     },
   },
   methods: {
+    getDefault() {
+      return new Promise(function (resolve, reject) {
+        // ... some code
+        getDefaultReportData().then((res) => {
+          resolve(res["COMPANY_CODE_COMPANY_CODE"]);
+        });
+      });
+    },
     getSearchString(key, Url) {
       var str = Url;
       str = str.substring(1, str.length); // 获取URL中?之后的字符（去掉第一位的问号）
@@ -360,9 +396,9 @@ export default {
       return obj[key];
     },
     getData() {
-      getService().then(res=>{
+      getService().then((res) => {
         this.messageData = res;
-      })
+      });
       getLastEntry().then((res) => {
         res.forEach((ele) => {
           var data = ele.DETAIL;
@@ -377,7 +413,7 @@ export default {
             yData: yAxis,
           };
         });
-        console.log(this.lineData)
+        console.log(this.lineData);
       });
       getReportData(this.userid).then((res) => {
         this.conpanyDes = res;
@@ -426,7 +462,6 @@ export default {
           name: "进销存",
           value: 5,
         },
-      
       ];
       var xData = [],
         yData = [];
@@ -493,7 +528,7 @@ export default {
           {
             type: "value",
             gridIndex: 0,
-           
+
             splitNumber: 12,
             splitLine: {
               show: false,
@@ -517,7 +552,6 @@ export default {
         ],
         series: [
           {
-         
             type: "bar",
             barWidth: "20%",
             xAxisIndex: 0,

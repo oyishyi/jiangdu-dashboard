@@ -12,7 +12,12 @@ export function getReportData(id) {
         method: 'get'        
     })
 }
-
+export function getDefaultReportData() {
+    return requestdev({
+        url: '/api/reporting/portraits',
+        method: 'get'        
+    })
+}
 export function getLastEntry(){
     return requestdev({
         url:"api/reporting/getLastEntries?days=30",
