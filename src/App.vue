@@ -122,7 +122,7 @@
                   class="chartLine"
                   v-if="lineData.SAP_JIANGDU_POLICYS"
                   :chartData="lineData.SAP_JIANGDU_POLICYS"
-                  title="最近一年上传政策"
+                  title="近期上传政策"
                 ></line-chart>
               </el-col>
               <el-col :span="12">
@@ -130,7 +130,7 @@
                   class="chartLine"
                   v-if="lineData.SAP_JIANGDU_JINRONGHUIQIS"
                   :chartData="lineData.SAP_JIANGDU_JINRONGHUIQIS"
-                  title="最近一年上架金融融资"
+                  title="近期上架金融融资"
                 ></line-chart
               ></el-col>
             </el-row>
@@ -140,7 +140,7 @@
                   class="chartLine"
                   v-if="lineData.SAP_JIANGDU_TALENTS"
                   :chartData="lineData.SAP_JIANGDU_TALENTS"
-                  title="最近一年上架人才"
+                  title="近期上架人才"
                 ></line-chart>
               </el-col>
               <el-col :span="8">
@@ -148,7 +148,7 @@
                   class="chartLine"
                   v-if="lineData.SAP_JIANGDU_ASSETS"
                   :chartData="lineData.SAP_JIANGDU_ASSETS"
-                  title="最近一年发布设备"
+                  title="近期发布设备"
                 ></line-chart
               ></el-col>
               <el-col :span="8">
@@ -156,7 +156,7 @@
                   class="chartLine"
                   v-if="lineData.SAP_JIANGDU_TECH_INNOS"
                   :chartData="lineData.SAP_JIANGDU_TECH_INNOS"
-                  title="最近一年上传科创"
+                  title="近期上传科创"
                 ></line-chart
               ></el-col>
             </el-row>
