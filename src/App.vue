@@ -61,7 +61,7 @@
               <li>
                 <a class="jumps" href="">
                   <div>
-                    <span>筹集资金</span>
+                    <span>金融产品</span>
                     <img src="./img/ccc2.png" alt="" />
                   </div>
                   <p class="" v-if="flag">
